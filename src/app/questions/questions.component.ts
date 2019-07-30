@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { switchMap } from 'rxjs/operators';
+
 import { QuestionsService } from '../questions.service';
 import { Quiz, Answers, Choice, Question } from '../quiz.model';
 
@@ -15,16 +17,22 @@ export class QuestionsComponent implements OnInit {
   private answers: Answers;
   private questions: Question[];
   private currentQuestionIndex: number;
+
   private showResults = false;
 
-  constructor(private route: ActivatedRoute, private questionsService: QuestionsService) { }
+  // inject both the active route and the questions service
+  constructor(private route: ActivatedRoute, private questionsService: QuestionsService) {}
 
   ngOnInit() {
-    this.questionsService.getQuestions(this.route.snapshot.params.quizId).subscribe(questions => {
-      this.questions = questions;
-      this.answers = new Answers();
-      this.currentQuestionIndex = 0;
-    });
+
+    // read from the dynamic route and load the proper quiz data
+    this.questionsService.getQuestions(this.route.snapshot.params.quizId)
+      .subscribe(questions => {
+        // initialize everything
+        this.questions = questions;
+        this.answers = new Answers();
+        this.currentQuestionIndex = 0;
+      });
   }
 
   updateChoice(choice: Choice) {
@@ -32,7 +40,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   nextOrViewResults() {
-    if (this.currentQuestionIndex === this.questions.length -1) {
+    if (this.currentQuestionIndex === this.questions.length - 1) {
       this.showResults = true;
       return;
     }

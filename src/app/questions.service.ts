@@ -7,19 +7,21 @@ import { Quiz, Question } from './quiz.model';
   providedIn: 'root'
 })
 export class QuestionsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public getQuizzes() {
-    return this.http.get(`./assets/quiz-list.json`).pipe(map((result: any[]) => {
-      return result.map(r => new Quiz(r.label, r.name, r.description, r.fileName));
-    })
+    return this.http.get(`./assets/quiz-list.json`).pipe(
+      map((result: any[]) => {
+        return result.map(r => new Quiz(r.label, r.name, r.description, r.fileName));
+      })
     );
   }
 
   public getQuestions(fileName: string) {
-    return this.http.get(`./assets/${fileName}.json`).pipe(map((result: any[]) => {
-      return result.map(r => new Question(r.label, r.choices));
-    })
+    return this.http.get(`./assets/${fileName}.json`).pipe(
+      map((result: any[]) => {
+        return result.map(r => new Question(r.label, r.choices));
+      })
     );
   }
 }

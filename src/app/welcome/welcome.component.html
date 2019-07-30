@@ -1,0 +1,6 @@
+<p>welcome works!</p>
+
+
+<mat-radio-group class="select-category-radio" aria-label="Select an option" [(ngModel)]="selectedCategory">
+    <mat-radio-button *ngFor="let topic of quiz" value={{topic.name}}>{{topic.name}}</mat-radio-button>
+</mat-radio-group>
