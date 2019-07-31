@@ -1,6 +1,22 @@
-<p>welcome works!</p>
+<mat-toolbar>
+    <h1 class="mat-h1">Welcome to my Quiz App</h1>
+</mat-toolbar>
 
 
+<label id="radio-category-label" class="mat-h2">Pick a category:</label>
 <mat-radio-group class="select-category-radio" aria-label="Select an option" [(ngModel)]="selectedCategory">
-    <mat-radio-button *ngFor="let topic of quiz" value={{topic.name}}>{{topic.name}}</mat-radio-button>
+    <mat-radio-button *ngFor="let topic of categories" value={{topic}}>{{topic}}</mat-radio-button>
 </mat-radio-group>
+
+<label id="radio-difficulty-label" class="mat-h2">Pick a difficulty:</label>
+<mat-radio-group class="select-difficulty-radio" aria-label="Select an option" [(ngModel)]="selectedDifficulty">
+    <mat-radio-button *ngFor="let choice of difficulties" value={{choice}}>{{choice}}</mat-radio-button>
+</mat-radio-group>
+
+<div class="next-page" *ngIf="selectedCategory && selectedDifficulty; then next_button else disabled_button"></div>
+<ng-template #next_button>
+    <button mat-raised-button (click)="onClick(selectedCategory, selectedDifficulty)">Next</button>
+</ng-template>
+<ng-template #disabled_button>
+    <button mat-raised-button disabled>Next</button>
+</ng-template>
