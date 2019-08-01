@@ -15,7 +15,7 @@
 
 <div class="next-page" *ngIf="selectedCategory && selectedDifficulty; then next_button else disabled_button"></div>
 <ng-template #next_button>
-    <button mat-raised-button (click)="onClick(selectedCategory, selectedDifficulty)">Next</button>
+    <button mat-raised-button routerLink="/quiz/{{selectedCategory}}/{{selectedDifficulty}}" >Next</button>
 </ng-template>
 <ng-template #disabled_button>
     <button mat-raised-button disabled>Next</button>

@@ -11,7 +11,7 @@ export class QuestionsService {
   constructor(private http: HttpClient) {}
 
   public getQuizzes(categoryName: number, difficulty: string):Observable<any> {
-    return this.http.get(`https://opentdb.com/api.php?amount=10&category=${categoryName}&difficulty=${difficulty}&type=multiple`);
+    return this.http.get(`https://opentdb.com/api.php?amount=5&category=${categoryName}&difficulty=${difficulty}&type=multiple`);
   }
 
   public getCategory(categoryName: string) {

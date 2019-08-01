@@ -8,25 +8,13 @@ import { QuestionsService } from '../questions.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  quiz: Object[];
+  quiz: object[];
   selectedCategory: string;
   selectedDifficulty: string;
   categories: string[] = ['General Knowledge', 'Science & Nature', 'Mythology', 'History'];
   difficulties: string[] = ['Easy', 'Medium', 'Hard'];
 
   constructor(public questionsService: QuestionsService) { }
-
-  onClick(selectedCategory: string, selectedDifficulty: string) {
-    
-    const category:number = this.questionsService.getCategory(selectedCategory);
-    const difficulty:string = selectedDifficulty.toLowerCase();
-
-    this.questionsService.getQuizzes(category, difficulty).subscribe(response => {
-      this.quiz = response.results;
-    });
-  }
-
-  
 
   ngOnInit() {
   }

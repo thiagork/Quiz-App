@@ -18,7 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
-  { path: ':quizId', component: QuestionsComponent },
+  { path: `quiz/:quizCategory/:quizDifficulty`, component: QuestionsComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
