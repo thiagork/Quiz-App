@@ -10,7 +10,7 @@ export class QuestionsService {
   constructor(private http: HttpClient) { }
 
   public getQuizzes(categoryName: number, difficulty: string): Observable<Question[]> {
-    const apiUrl = `https://opentdb.com/api.php?amount=2&category=${categoryName}&difficulty=${difficulty}&type=multiple`;
+    const apiUrl = `https://opentdb.com/api.php?amount=5&category=${categoryName}&difficulty=${difficulty}&type=multiple`;
     return this.http.get<Question[]>(apiUrl);
   }
 
