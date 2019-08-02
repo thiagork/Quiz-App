@@ -23,9 +23,3 @@ export class Question {
 
 }
 
-export class Answers {
-  constructor(
-    public answers: string
-  ) { }
-
-}

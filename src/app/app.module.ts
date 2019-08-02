@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { QuestionFormComponent } from './question-form/question-form.component';
-import { fromEventPattern } from 'rxjs';
 import { ResultsComponent } from './results/results.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -17,8 +15,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
-
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
   { path: `quiz/:quizCategory/:quizDifficulty`, component: QuestionsComponent },
@@ -28,7 +24,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionFormComponent,
     ResultsComponent,
     QuestionsComponent,
     WelcomeComponent
