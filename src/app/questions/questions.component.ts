@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { QuestionsService } from '../questions.service';
-import { Quiz, Answers, Choice, Question } from '../quiz.model';
+import { Question } from '../quiz.model';
 
 @Component({
   selector: 'app-questions',
@@ -13,20 +13,18 @@ import { Quiz, Answers, Choice, Question } from '../quiz.model';
 })
 export class QuestionsComponent implements OnInit {
 
-  private quiz: object[];
-  private questions: Question[];
+  private quiz: Question[];
   private currentQuestionIndex: number;
   private quizCategory: number;
   private quizDifficulty: string;
   private quizLog: object[];
   private userAnswer: string;
-  private showResults = false;
   private currentQuestion: any;
   // inject both the active route and the questions service
   constructor(private route: ActivatedRoute, private questionsService: QuestionsService) { }
 
-  buildQuestion(quiz: object[], index: number) {
-    const incorrectAnswers: string = quiz[index].incorrect_answers;
+  buildQuestion(quiz: Question[], index: number) {
+    const incorrectAnswers: string[] = quiz[index].incorrect_answers;
     const correctAnswer: string = quiz[index].correct_answer;
     const choices = [...incorrectAnswers].concat(correctAnswer);
 
@@ -60,7 +58,8 @@ export class QuestionsComponent implements OnInit {
     this.quizDifficulty = this.route.snapshot.params.quizDifficulty.toLowerCase();
     this.quizLog = [];
 
-    this.questionsService.getQuizzes(this.quizCategory, this.quizDifficulty).subscribe(response => {
+    // Gets questions from API
+    this.questionsService.getQuizzes(this.quizCategory, this.quizDifficulty).subscribe((response: any) => {
       this.quiz = response.results;
       console.log(this.quiz);
 

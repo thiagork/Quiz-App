@@ -1,15 +1,13 @@
-export class Choice {
-  constructor(public value: string, public correct?: boolean) { }
-}
-
 export class Question {
-  constructor(public label: string, public choices: Choice[]) { }
-}
+    constructor(
+      public category: string,
+      // tslint:disable-next-line: variable-name
+      public correct_answer: string,
+      public difficulty: string,
+      // tslint:disable-next-line: variable-name
+      public incorrect_answers: string[],
+      public question: string,
+      public type: string
+    ) { }
 
-export class Quiz {
-  constructor(public label: string, public name: string, public description: string, public fileName: string) { }
-}
-
-export class Answers {
-  constructor(public values: Choice[] = []) { }
 }

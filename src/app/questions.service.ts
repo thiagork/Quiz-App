@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Quiz, Question } from './quiz.model';
+import { Question } from './quiz.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,8 +10,9 @@ import { Observable } from 'rxjs';
 export class QuestionsService {
   constructor(private http: HttpClient) {}
 
-  public getQuizzes(categoryName: number, difficulty: string):Observable<any> {
-    return this.http.get(`https://opentdb.com/api.php?amount=5&category=${categoryName}&difficulty=${difficulty}&type=multiple`);
+  public getQuizzes(categoryName: number, difficulty: string): Observable<Question[]> {
+    const apiUrl = `https://opentdb.com/api.php?amount=5&category=${categoryName}&difficulty=${difficulty}&type=multiple`;
+    return this.http.get<Question[]>(apiUrl);
   }
 
   public getCategory(categoryName: string) {
@@ -36,11 +37,11 @@ export class QuestionsService {
   //   );
   // }
 
-  public getQuestions(fileName: string) {
-    return this.http.get(`./assets/${fileName}.json`).pipe(
-      map((result: any[]) => {
-        return result.map(r => new Question(r.label, r.choices));
-      })
-    );
-  }
+  // public getQuestions(fileName: string) {
+  //   return this.http.get(`./assets/${fileName}.json`).pipe(
+  //     map((result: any[]) => {
+  //       return result.map(r => new Question(r.label, r.choices));
+  //     })
+  //   );
+  // }
 }
