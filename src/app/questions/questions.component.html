@@ -1,42 +1,24 @@
-<div class="quiz" *ngIf="quiz">
+<div class="quiz" *ngIf="quiz && !renderResults">
   <mat-toolbar>
-    <h1 class="mat-h1">Question {{currentQuestionIndex}}</h1>
+    <h1 class="mat-h1">Question {{currentQuestionIndex + 1}}</h1>
   </mat-toolbar>
 
 
   <label id="radio-question-label" class="mat-h2">{{currentQuestion.Question}}</label>
   <mat-radio-group class="select-answer-radio" aria-label="Select an answer" [(ngModel)]="userAnswer">
-    <mat-radio-button *ngFor="let answer of currentQuestion.Choices" value={{answer}}>{{answer}}</mat-radio-button>
+    <mat-radio-button style="display: block;" *ngFor="let answer of currentQuestion.Choices" value={{answer}}>
+      {{answer}} 
+    </mat-radio-button> 
   </mat-radio-group>
 
   <div class="next-page" *ngIf="userAnswer; then next_button else disabled_button"></div>
   <ng-template #next_button>
-    <button mat-raised-button (click)="nextOrViewResults()">Next</button>
+    <button mat-raised-button (click)="nextOrViewResults()">{{currentQuestionIndex == quiz.length -1 ? 'Show results' : 'Next'}}</button>
   </ng-template>
   <ng-template #disabled_button>
-    <button mat-raised-button disabled>Next</button>
+    <button mat-raised-button disabled>{{currentQuestionIndex == quiz.length -1 ? 'Show results' : 'Next'}}</button>
   </ng-template>
 
 </div>
 
-
-
-<!-- <div *ngIf="quiz && !questions" class="spinner-grow text-primary"></div>
-
-<div class="quiz" *ngIf="questions">
-
-  <div class="questions" *ngIf="!showResults">
-    <app-question-form
-      [question]="questions[currentQuestionIndex]"
-      (onChoiceMade)="updateChoice($event)">
-    </app-question-form>
-
-    <button
-      class="btn btn-success"
-      (click)="nextOrViewResults()"
-      [disabled]="!answers.values[currentQuestionIndex]"
-    >{{currentQuestionIndex === questions.length - 1 ? 'View results' : 'Next'}}</button>
-  </div>
-
-  <app-results *ngIf="showResults" [answers]="answers"></app-results>
-</div> -->
+<app-results *ngIf="renderResults" [quizLog]="quizLog"></app-results>

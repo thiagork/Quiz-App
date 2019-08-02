@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { switchMap } from 'rxjs/operators';
-
 import { QuestionsService } from '../questions.service';
-import { Question } from '../quiz.model';
+import { Quiz, Question } from '../quiz.model';
 
 @Component({
   selector: 'app-questions',
@@ -13,91 +10,76 @@ import { Question } from '../quiz.model';
 })
 export class QuestionsComponent implements OnInit {
 
-  private quiz: Question[];
+  private quiz: Quiz[];
   private currentQuestionIndex: number;
-  private quizCategory: number;
-  private quizDifficulty: string;
-  private quizLog: object[];
-  private userAnswer: string;
-  private currentQuestion: any;
+  private quizLog: Question[];
+  private userAnswer: string; // value comes from questions.component.html
+  private currentQuestion: Question;
+  private renderResults: boolean;
+
   // inject both the active route and the questions service
   constructor(private route: ActivatedRoute, private questionsService: QuestionsService) { }
 
-  buildQuestion(quiz: Question[], index: number) {
+  buildQuestion(quiz: Quiz[], index: number): Question {
     const incorrectAnswers: string[] = quiz[index].incorrect_answers;
     const correctAnswer: string = quiz[index].correct_answer;
-    const choices = [...incorrectAnswers].concat(correctAnswer);
-
-    // shuffle choices
-    const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    };
+    const choices: string[] = [...incorrectAnswers].concat(correctAnswer);
 
     return {
       Question: quiz[index].question,
-      Choices: shuffleArray(choices),
+      Choices: this.questionsService.shuffleArray(choices),
       CorrectAnswer: correctAnswer
     };
   }
 
   nextOrViewResults() {
-    const updatedCurrentQuestion: any = {...this.currentQuestion};
+    const updatedCurrentQuestion: Question = {...this.currentQuestion};
     updatedCurrentQuestion.UserAnswer = this.userAnswer;
+    this.userAnswer = undefined;
     this.quizLog = [...this.quizLog].concat(updatedCurrentQuestion);
+    console.log('quizlog = ', this.quizLog);
+
+    if (this.currentQuestionIndex < this.quiz.length - 1) {
+      this.nextPage();
+    } else {
+      this.showResults();
+    }
+  }
+
+  nextPage() {
     this.currentQuestionIndex++;
     this.currentQuestion = this.buildQuestion(this.quiz, this.currentQuestionIndex);
-    console.log(this.quizLog);
+  }
+
+  showResults() {
+    this.renderResults = true;
+    this.reset();
   }
 
   ngOnInit() {
-    this.quizCategory = this.questionsService.getCategory(this.route.snapshot.params.quizCategory);
-    this.quizDifficulty = this.route.snapshot.params.quizDifficulty.toLowerCase();
     this.quizLog = [];
+    this.renderResults = false;
 
     // Gets questions from API
-    this.questionsService.getQuizzes(this.quizCategory, this.quizDifficulty).subscribe((response: any) => {
+    const quizCategory: number = this.questionsService.getCategory(this.route.snapshot.params.quizCategory);
+    const quizDifficulty: string = this.route.snapshot.params.quizDifficulty.toLowerCase();
+
+    this.questionsService.getQuizzes(quizCategory, quizDifficulty).subscribe((response: any) => {
       this.quiz = response.results;
-      console.log(this.quiz);
+      console.log('get quizzes: ', this.quiz);
 
       this.currentQuestionIndex = 0;
       this.currentQuestion = this.buildQuestion(this.quiz, this.currentQuestionIndex);
 
-      console.log(this.buildQuestion(this.quiz, this.currentQuestionIndex));
+      console.log('current question: ', this.currentQuestion);
     });
   }
 
-  // read from the dynamic route and load the proper quiz data
-  //   this.questionsService.getQuestions(this.route.snapshot.params.quizId)
-  //     .subscribe(questions => {
-  //       // initialize everything
-  //       this.questions = questions;
-  //       this.answers = new Answers();
-  //       this.currentQuestionIndex = 0;
-  //     });
-  // }
-
-  // updateChoice(choice: Choice) {
-  //   this.answers.values[this.currentQuestionIndex] = choice;
-  // }
-
-
-  // nextOrViewResults() {
-  //   if (this.currentQuestionIndex === this.questions.length - 1) {
-  //     this.showResults = true;
-  //     return;
-  //   }
-
-  //   this.currentQuestionIndex++;
-  // }
-
-  // reset() {
-  //   this.quiz = undefined;
-  //   this.questions = undefined;
-  //   this.answers = undefined;
-  //   this.currentQuestionIndex = undefined;
+  reset() {
+    this.quiz = undefined;
+    this.currentQuestionIndex = undefined;
+    this.userAnswer = undefined;
+    this.currentQuestion = undefined;
+  }
 }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Question } from './quiz.model';
 import { Observable } from 'rxjs';
 
@@ -8,10 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuestionsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getQuizzes(categoryName: number, difficulty: string): Observable<Question[]> {
-    const apiUrl = `https://opentdb.com/api.php?amount=5&category=${categoryName}&difficulty=${difficulty}&type=multiple`;
+    const apiUrl = `https://opentdb.com/api.php?amount=2&category=${categoryName}&difficulty=${difficulty}&type=multiple`;
     return this.http.get<Question[]>(apiUrl);
   }
 
@@ -28,20 +27,11 @@ export class QuestionsService {
     }
   }
 
-
-  // public getQuizzes() {
-  //   return this.http.get(`./assets/quiz-list.json`).pipe(
-  //     map((result: any[]) => {
-  //       return result.map(r => new Quiz(r.label, r.name, r.description, r.fileName));
-  //     })
-  //   );
-  // }
-
-  // public getQuestions(fileName: string) {
-  //   return this.http.get(`./assets/${fileName}.json`).pipe(
-  //     map((result: any[]) => {
-  //       return result.map(r => new Question(r.label, r.choices));
-  //     })
-  //   );
-  // }
+  public shuffleArray(array: string[]) {
+    for (let i: number = array.length - 1; i > 0; i--) {
+      const j: number = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 }

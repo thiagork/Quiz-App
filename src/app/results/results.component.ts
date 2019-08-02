@@ -1,11 +1,27 @@
-import { Component, Input } from '@angular/core';
-import { Answers } from '../quiz.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Question } from '../quiz.model';
 
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.scss']
 })
-export class ResultsComponent {
-  @Input() answers: Answers;
+export class ResultsComponent implements OnInit {
+  @Input() quizLog: Question[];
+
+  private numberOfCorrectAnswers: number;
+
+  countCorrectAnswers(quizLog: Question[]): number {
+    let count = 0;
+    quizLog.map(item => {
+      if (item.CorrectAnswer === item.UserAnswer) {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  ngOnInit(): void {
+    this.numberOfCorrectAnswers = this.countCorrectAnswers(this.quizLog);
+  }
 }

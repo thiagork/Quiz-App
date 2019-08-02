@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 
@@ -39,7 +41,9 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     MatRadioModule,
     MatButtonModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

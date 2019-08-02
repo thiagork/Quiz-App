@@ -1,4 +1,4 @@
-export class Question {
+export class Quiz {
     constructor(
       public category: string,
       // tslint:disable-next-line: variable-name
@@ -9,5 +9,23 @@ export class Question {
       public question: string,
       public type: string
     ) { }
+
+}
+
+export class Question {
+  constructor(
+    // tslint:disable-next-line: no-shadowed-variable
+    public Question: string,
+    public Choices: string[],
+    public CorrectAnswer: string,
+    public UserAnswer?: string
+  ) { }
+
+}
+
+export class Answers {
+  constructor(
+    public answers: string
+  ) { }
 
 }

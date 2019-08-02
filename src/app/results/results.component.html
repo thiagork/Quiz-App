@@ -1,5 +1,12 @@
-<div class="results">
-    <h2>Results</h2>
-    <div class="answer" *ngFor="let a of answers.values" [ngClass]="{correct: a.correct}">{{a.value}}</div>
-    <a routerLink="/welcome" class="btn btn-primary">Choose another quiz</a>
-</div>
+<mat-toolbar>
+    <h1 class="mat-h1">Results</h1>
+</mat-toolbar>
+
+<mat-list>
+    <mat-list-item>You got {{numberOfCorrectAnswers}} out of {{quizLog.length}} questions correct</mat-list-item>
+    <mat-list-item *ngFor="let item of quizLog; let i = index">
+        Question {{i + 1}}: {{item.Question}} <mat-chip-list aria-label="show-if-correct-incorrect"><mat-chip selected color="accent" *ngIf="item.CorrectAnswer === item.UserAnswer">Correct</mat-chip><mat-chip selected color="warn" *ngIf="item.CorrectAnswer !== item.UserAnswer">Incorrect</mat-chip></mat-chip-list>
+    </mat-list-item>
+</mat-list>
+
+<button mat-raised-button routerLink="/welcome">Try again</button>
