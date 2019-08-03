@@ -10,12 +10,12 @@ import { Quiz, Question } from '../quiz.model';
 })
 export class QuestionsComponent implements OnInit {
 
-  private quiz: Quiz[];
-  private currentQuestionIndex: number;
-  private quizLog: Question[];
-  private userAnswer: string; // value comes from questions.component.html
-  private currentQuestion: Question;
-  private renderResults: boolean;
+  public quiz: Quiz[];
+  public currentQuestionIndex: number;
+  public quizLog: Question[];
+  public userAnswer: string; // value comes from questions.component.html
+  public currentQuestion: Question;
+  public renderResults: boolean;
 
   // inject both the active route and the questions service
   constructor(private route: ActivatedRoute, private questionsService: QuestionsService) { }
@@ -37,7 +37,6 @@ export class QuestionsComponent implements OnInit {
     updatedCurrentQuestion.UserAnswer = this.userAnswer;
     this.userAnswer = undefined;
     this.quizLog = [...this.quizLog].concat(updatedCurrentQuestion);
-    console.log('quizlog = ', this.quizLog);
 
     if (this.currentQuestionIndex < this.quiz.length - 1) {
       this.nextPage();
@@ -66,12 +65,9 @@ export class QuestionsComponent implements OnInit {
 
     this.questionsService.getQuizzes(quizCategory, quizDifficulty).subscribe((response: any) => {
       this.quiz = response.results;
-      console.log('get quizzes: ', this.quiz);
 
       this.currentQuestionIndex = 0;
       this.currentQuestion = this.buildQuestion(this.quiz, this.currentQuestionIndex);
-
-      console.log('current question: ', this.currentQuestion);
     });
   }
 

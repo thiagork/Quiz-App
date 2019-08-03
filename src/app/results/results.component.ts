@@ -9,7 +9,7 @@ import { Question } from '../quiz.model';
 export class ResultsComponent implements OnInit {
   @Input() quizLog: Question[];
 
-  private numberOfCorrectAnswers: number;
+  public numberOfCorrectAnswers: number;
 
   countCorrectAnswers(quizLog: Question[]): number {
     let count = 0;
