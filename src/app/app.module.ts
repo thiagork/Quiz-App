@@ -14,7 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { HTMLEscapeUnescapeModule } from 'html-escape-unescape';
+import { HtmlDecode } from './htmlDecode.pipe';
 
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomeComponent },
@@ -27,7 +27,8 @@ const appRoutes: Routes = [
     AppComponent,
     ResultsComponent,
     QuestionsComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    HtmlDecode
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -41,8 +42,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatListModule,
     MatChipsModule,
-    MatTooltipModule,
-    HTMLEscapeUnescapeModule
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

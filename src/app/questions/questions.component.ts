@@ -18,7 +18,8 @@ export class QuestionsComponent implements OnInit {
   public renderResults: boolean;
 
   // inject both the active route and the questions service
-  constructor(private route: ActivatedRoute, private questionsService: QuestionsService) { }
+  constructor(private route: ActivatedRoute, private questionsService: QuestionsService) {
+   }
 
   buildQuestion(quiz: Quiz[], index: number): Question {
     const incorrectAnswers: string[] = quiz[index].incorrect_answers;

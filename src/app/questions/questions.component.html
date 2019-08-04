@@ -4,10 +4,10 @@
   </mat-toolbar>
 
 
-  <label id="radio-question-label" class="mat-h2">{{currentQuestion.Question | unescape}}</label>
+  <label id="radio-question-label" class="mat-h2">{{currentQuestion.Question | htmlDecode}}</label>
   <mat-radio-group class="select-answer-radio" aria-label="Select an answer" [(ngModel)]="userAnswer">
     <mat-radio-button style="display: block;" *ngFor="let answer of currentQuestion.Choices" value={{answer}}>
-      {{answer | unescape}} 
+      {{answer | htmlDecode}} 
     </mat-radio-button> 
   </mat-radio-group>
 
