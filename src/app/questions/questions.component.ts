@@ -16,6 +16,7 @@ export class QuestionsComponent implements OnInit {
   public userAnswer: string; // value comes from questions.component.html
   public currentQuestion: Question;
   public renderResults: boolean;
+  public pageLoading: boolean;
 
   // inject both the active route and the questions service
   constructor(private route: ActivatedRoute, private questionsService: QuestionsService) {
@@ -59,6 +60,7 @@ export class QuestionsComponent implements OnInit {
   ngOnInit() {
     this.quizLog = [];
     this.renderResults = false;
+    this.pageLoading = true;
 
     // Gets questions from API
     const quizCategory: number = this.questionsService.getCategory(this.route.snapshot.params.quizCategory);
@@ -66,6 +68,7 @@ export class QuestionsComponent implements OnInit {
 
     this.questionsService.getQuizzes(quizCategory, quizDifficulty).subscribe((response: any) => {
       this.quiz = response.results;
+      this.pageLoading = false;
 
       this.currentQuestionIndex = 0;
       this.currentQuestion = this.buildQuestion(this.quiz, this.currentQuestionIndex);

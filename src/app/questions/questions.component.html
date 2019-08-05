@@ -1,3 +1,7 @@
+<div class="quiz-loading" *ngIf="pageLoading" >
+  <mat-spinner color="accent" mode="indeterminate"></mat-spinner>
+</div>
+
 <div class="quiz" *ngIf="quiz && !renderResults">
   <mat-toolbar>
     <h1 class="mat-h1">Question {{currentQuestionIndex + 1}}</h1>
